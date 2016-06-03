@@ -1,3 +1,8 @@
+/**
+ * THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
+ * FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+ */
 package com.xebialabs.xlrelease.flowdock.plugin;
 
 import com.xebialabs.deployit.plugin.api.reflect.Type;
@@ -44,7 +49,8 @@ public class FlowdockRepositoryService {
         if (query.size() > 0) {
             flowdockConfigurations = new ArrayList<FlowdockConfiguration>();
             for (ConfigurationItem read : query) {
-                flowdockConfigurations.add(new FlowdockConfiguration((String) read.getProperty("apiUrl"), (String) read.getProperty("flowToken"), (Boolean) read.getProperty("enabled")));
+                flowdockConfigurations.add(new FlowdockConfiguration((String) read.getProperty("apiUrl"), (String) read.getProperty("apiKey"), (Boolean) read.getProperty("enabled"),(String) read.getProperty("proxyHost"),(Integer) read.getProperty("proxyPort"),(String) read.getProperty("templateName"),(String) read.getProperty("flowToken"),(String) read.getProperty("orgParamName")));
+              // flowdockConfigurations.add(new FlowdockConfiguration((String) read.getProperty("apiUrl"), (String) read.getProperty("apiKey"), (Boolean) read.getProperty("enabled"),"",0,(String) read.getProperty("templateName"),(String) read.getProperty("flowToken"),(String) read.getProperty("orgParamName")));
             }
         } else {
             throw new FlowdockNotConfiguredException();
