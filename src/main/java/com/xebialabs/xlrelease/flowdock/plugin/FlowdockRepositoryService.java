@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 XEBIALABS
+* Copyright 2018 XEBIALABS
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
@@ -9,24 +9,23 @@
  */
 package com.xebialabs.xlrelease.flowdock.plugin;
 
-import com.xebialabs.deployit.plugin.api.reflect.Type;
-import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
-import com.xebialabs.deployit.repository.RepositoryServiceHolder;
-import com.xebialabs.deployit.repository.SearchParameters;
-import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.xebialabs.xlrelease.domain.Configuration;
+import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
+
+import static com.xebialabs.xlrelease.api.XLReleaseServiceHolder.getConfigurationApi;
 
 /**
  * Created by jdewinne on 2/5/15.
  */
 public class FlowdockRepositoryService {
 
-    private List<FlowdockConfiguration> flowdockConfigurations;
+    private List<FlowdockConfiguration> flowdockConfigurations = new ArrayList<>();
 
     public List<FlowdockConfiguration> getFlowdockConfigurations() throws FlowdockNotConfiguredException {
-        if (flowdockConfigurations == null) {
+        if (flowdockConfigurations.isEmpty()) {
             setFlowdockConfigurations();
         }
 
@@ -34,7 +33,7 @@ public class FlowdockRepositoryService {
     }
 
     public Boolean isFlowdockEnabled() throws FlowdockNotConfiguredException {
-        if (flowdockConfigurations == null) {
+        if (flowdockConfigurations.isEmpty()) {
             setFlowdockConfigurations();
         }
 
@@ -48,13 +47,11 @@ public class FlowdockRepositoryService {
 
     private void setFlowdockConfigurations() throws FlowdockNotConfiguredException {
         // Get flowdock properties
-        SearchParameters parameters = new SearchParameters().setType(Type.valueOf("flowdock.configuration"));
-        List<ConfigurationItem> query = RepositoryServiceHolder.getRepositoryService().listEntities(parameters);
-        if (query.size() > 0) {
-            flowdockConfigurations = new ArrayList<FlowdockConfiguration>();
-            for (ConfigurationItem read : query) {
-                flowdockConfigurations.add(new FlowdockConfiguration((String) read.getProperty("apiUrl"), (String) read.getProperty("flowToken"), (Boolean) read.getProperty("enabled")));
-            }
+        List<Configuration> configurations = getConfigurationApi().searchByTypeAndTitle("flowdock.configuration", null);
+        if (configurations.size() > 0) {
+            configurations.forEach(conf -> flowdockConfigurations.add(
+                new FlowdockConfiguration(conf.getProperty("apiUrl"), conf.getProperty("flowToken"), conf.getProperty("enabled")))
+            );
         } else {
             throw new FlowdockNotConfiguredException();
         }

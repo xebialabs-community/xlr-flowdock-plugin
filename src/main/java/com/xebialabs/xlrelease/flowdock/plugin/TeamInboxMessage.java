@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 XEBIALABS
+ * Copyright 2018 XEBIALABS
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
@@ -9,9 +9,9 @@
  */
 package com.xebialabs.xlrelease.flowdock.plugin;
 
-import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
-
 import java.io.UnsupportedEncodingException;
+
+import com.xebialabs.xlrelease.domain.ActivityLogEntry;
 
 /**
  * Created by jdewinne on 2/5/15.
@@ -60,12 +60,12 @@ public class TeamInboxMessage extends FlowdockMessage {
         return postData.toString();
     }
 
-    public static TeamInboxMessage fromAuditableDeployitEvent(ConfigurationItem ci) {
+    public static TeamInboxMessage fromActivityLogEntry(ActivityLogEntry e) {
         TeamInboxMessage msg = new TeamInboxMessage();
         StringBuffer content = new StringBuffer();
-        content.append("XL Release event for ").append(ci.getId());
-        content.append(" with message ").append((String)ci.getProperty("message"));
-        content.append(" from user ").append((String)ci.getProperty("username"));
+        content.append("XL Release event for ").append(e.getId());
+        content.append(" with message ").append(e.getMessage());
+        content.append(" from user ").append(e.getUsername());
 
         msg.setContent(content.toString());
         msg.setSubject("XL Release event");
