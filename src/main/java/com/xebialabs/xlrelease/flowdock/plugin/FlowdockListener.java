@@ -31,7 +31,6 @@ public class FlowdockListener implements XLReleaseEventListener {
 
     @AsyncSubscribe
     public void sendUpdateToFlowdock(ActivityLogEvent event) {
-        logger.info("Enter FlowdockListener");
         FlowdockRepositoryService flowdockRepositoryService = new FlowdockRepositoryService();
         try {
             if (flowdockRepositoryService.isFlowdockEnabled()) {
@@ -52,10 +51,6 @@ public class FlowdockListener implements XLReleaseEventListener {
             }
         } catch (FlowdockNotConfiguredException e) {
             // Do nothing, as Flowdock is not yet configured.
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            logger.info("End FlowdockListener");    
         }
     }
 }
