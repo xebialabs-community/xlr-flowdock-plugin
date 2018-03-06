@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
+import com.xebialabs.xlrelease.api.v1.IConfigurationApi;
 import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
-
-import static com.xebialabs.xlrelease.api.ServiceHolder.getConfigurationApi;
 
 /**
  * Created by jdewinne on 2/5/15.
@@ -23,6 +22,12 @@ import static com.xebialabs.xlrelease.api.ServiceHolder.getConfigurationApi;
 public class FlowdockRepositoryService {
 
     private List<FlowdockConfiguration> flowdockConfigurations = new ArrayList<>();
+    
+    private IConfigurationApi configurationApi;
+    
+    public FlowdockRepositoryService(IConfigurationApi configurationApi) {
+        this.configurationApi = configurationApi;
+    }
 
     public List<FlowdockConfiguration> getFlowdockConfigurations() throws FlowdockNotConfiguredException {
         if (flowdockConfigurations.isEmpty()) {
@@ -47,7 +52,7 @@ public class FlowdockRepositoryService {
 
     private void setFlowdockConfigurations() throws FlowdockNotConfiguredException {
         // Get flowdock properties
-        final List<? extends ConfigurationItem> configurations = getConfigurationApi().searchByTypeAndTitle("flowdock.configuration", null);
+        final List<? extends ConfigurationItem> configurations = configurationApi.searchByTypeAndTitle("flowdock.configuration", null);
         if (configurations.size() > 0) {
             configurations.forEach(conf -> flowdockConfigurations.add(
                 new FlowdockConfiguration(conf.getProperty("apiUrl"), conf.getProperty("flowToken"), conf.getProperty("enabled")))
