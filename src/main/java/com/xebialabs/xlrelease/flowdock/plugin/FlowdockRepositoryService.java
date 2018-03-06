@@ -12,10 +12,10 @@ package com.xebialabs.xlrelease.flowdock.plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xebialabs.xlrelease.domain.Configuration;
+import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
 import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
 
-import static com.xebialabs.xlrelease.api.XLReleaseServiceHolder.getConfigurationApi;
+import static com.xebialabs.xlrelease.api.ServiceHolder.getConfigurationApi;
 
 /**
  * Created by jdewinne on 2/5/15.
@@ -47,7 +47,7 @@ public class FlowdockRepositoryService {
 
     private void setFlowdockConfigurations() throws FlowdockNotConfiguredException {
         // Get flowdock properties
-        List<Configuration> configurations = getConfigurationApi().searchByTypeAndTitle("flowdock.configuration", null);
+        final List<? extends ConfigurationItem> configurations = getConfigurationApi().searchByTypeAndTitle("flowdock.configuration", null);
         if (configurations.size() > 0) {
             configurations.forEach(conf -> flowdockConfigurations.add(
                 new FlowdockConfiguration(conf.getProperty("apiUrl"), conf.getProperty("flowToken"), conf.getProperty("enabled")))

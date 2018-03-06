@@ -19,6 +19,7 @@ xlDocker {
 }
 
 def apiVersion = '2018.3.0-SNAPSHOT'
+def xlrVersion = '7.6.1-SNAPSHOT'
 
 if (!project.hasProperty('release.scope')) {
   project.ext['release.scope'] = 'patch'
@@ -39,9 +40,7 @@ repositories {
 
 dependencies {
   compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
-  compile group: "com.xebialabs.xlrelease", name:"xlr-domain", version: "7.6.1-SNAPSHOT", transitive: false
-  compile group: "com.xebialabs.xlrelease", name:"xlr-server", version: "7.6.1-SNAPSHOT", transitive: false
-  compile group: "com.xebialabs.xlrelease.modules", name:"xlr-activity-logs-module", version: "7.6.1-SNAPSHOT", transitive: false
+  compile group: "com.xebialabs.xlrelease", name:"xlr-api", version: xlrVersion, transitive: false
   jython ":requests:2.11.1"
   jython(":python-flowdock:0.1") {
     artifact {

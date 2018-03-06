@@ -13,13 +13,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xebialabs.xlrelease.events.ActivityLogEvent;
+import com.xebialabs.xlrelease.domain.events.ActivityLogEvent;
 import com.xebialabs.xlrelease.events.AsyncSubscribe;
 import com.xebialabs.xlrelease.events.XLReleaseEventListener;
 import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockException;
 import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
 
-import static com.xebialabs.xlrelease.flowdock.plugin.TeamInboxMessage.fromActivityLogEntry;
+import static com.xebialabs.xlrelease.flowdock.plugin.TeamInboxMessage.fromActivityLogEvent;
 
 
 /**
@@ -40,7 +40,7 @@ public class FlowdockListener implements XLReleaseEventListener {
                 flowdockConfigurations.stream().filter(FlowdockConfiguration::isEnabled).forEach(conf -> {
                     // Send message to flowdock
                     FlowdockApi api = new FlowdockApi(conf);
-                    TeamInboxMessage msg = fromActivityLogEntry(event.activityLog());
+                    TeamInboxMessage msg = fromActivityLogEvent(event);
                     try {
                         api.pushTeamInboxMessage(msg);
                     } catch (FlowdockException e) {
