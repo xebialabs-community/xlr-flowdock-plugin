@@ -19,7 +19,7 @@ xlDocker {
 }
 
 def apiVersion = '2018.3.0-SNAPSHOT'
-def xlrVersion = '7.6.1-SNAPSHOT'
+def xlrVersion = '7.6.1-SNAPSHOT' // todo: change to 8.0 when released
 
 if (!project.hasProperty('release.scope')) {
   project.ext['release.scope'] = 'patch'
