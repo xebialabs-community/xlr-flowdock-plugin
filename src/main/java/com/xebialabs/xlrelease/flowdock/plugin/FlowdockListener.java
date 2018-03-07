@@ -10,11 +10,11 @@
 package com.xebialabs.xlrelease.flowdock.plugin;
 
 import java.util.List;
+import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xebialabs.xlrelease.api.Inject;
-import com.xebialabs.xlrelease.api.v1.IConfigurationApi;
+import com.xebialabs.xlrelease.api.v1.ConfigurationApi;
 import com.xebialabs.xlrelease.domain.events.ActivityLogEvent;
 import com.xebialabs.xlrelease.events.AsyncSubscribe;
 import com.xebialabs.xlrelease.events.XLReleaseEventListener;
@@ -31,8 +31,8 @@ public class FlowdockListener implements XLReleaseEventListener {
 
     private final static Logger logger = LoggerFactory.getLogger(FlowdockListener.class);
     
-    @Inject
-    private IConfigurationApi configurationApi;
+    @Resource
+    private ConfigurationApi configurationApi;
 
     @AsyncSubscribe
     public void sendUpdateToFlowdock(ActivityLogEvent event) {

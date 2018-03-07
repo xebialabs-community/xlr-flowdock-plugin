@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
-import com.xebialabs.xlrelease.api.v1.IConfigurationApi;
+import com.xebialabs.xlrelease.api.v1.ConfigurationApi;
 import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
 
 /**
@@ -23,9 +23,9 @@ public class FlowdockRepositoryService {
 
     private List<FlowdockConfiguration> flowdockConfigurations = new ArrayList<>();
     
-    private IConfigurationApi configurationApi;
+    private ConfigurationApi configurationApi;
     
-    public FlowdockRepositoryService(IConfigurationApi configurationApi) {
+    FlowdockRepositoryService(ConfigurationApi configurationApi) {
         this.configurationApi = configurationApi;
     }
 
