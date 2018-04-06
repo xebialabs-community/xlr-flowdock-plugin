@@ -1,8 +1,4 @@
-# Preface
-
-This document describes the functionality provided by the XL Release Flowdock plugin.
-
-See the [XL Release Documentation](https://docs.xebialabs.com/xl-release/) for background information on XL Release and release orchestration concepts.
+# XL Release Flowdock plugin
 
 [![Build Status][xlr-flowdock-plugin-travis-image] ][xlr-flowdock-plugin-travis-url]
 [![Codacy][xlr-flowdock-plugin-codacy-image] ][xlr-flowdock-plugin-codacy-url]
@@ -20,7 +16,11 @@ See the [XL Release Documentation](https://docs.xebialabs.com/xl-release/) for b
 [xlr-flowdock-plugin-license-url]: https://opensource.org/licenses/MIT
 [xlr-flowdock-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-flowdock-plugin/total.svg
 
+## Preface
 
+This document describes the functionality provided by the XL Release Flowdock plugin.
+
+See the [XL Release Documentation](https://docs.xebialabs.com/xl-release/) for background information on XL Release and release orchestration concepts.
 
 ## Overview
 
@@ -33,7 +33,8 @@ The XL Release Flowdock plugin is a XL Release plugin that adds capability for s
 
 ## Installation
 
-Place the plugin JAR file into your `SERVER_HOME/plugins` directory.
+* Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xlr-flowdock-plugin/releases) into the `XL_RELEASE_SERVER/plugins` directory.
+* Restart the XL Release server.
 
 ## Usage
 
@@ -45,6 +46,7 @@ Place the plugin JAR file into your `SERVER_HOME/plugins` directory.
    ![Flowdock configuration](images/Flowdock_configuration.png?raw=true "Flowdock configuration")
 4. Each time XL Release stores something into the Activity logs, this will also be send to Flowdock.   
 
-### Tasks
+## Tasks
 
-+ SendTeamInboxMessage: Allows to send a specific message to a TeamInbox.
++ SendTeamInboxMessage: Send a specific message to a TeamInbox.
++ PostMessage:  Send a specific message to a flow (inbox) using the Messages API.  A Flowdock server should be configured.  In this case the flow token must be one associated with a source.  See <https://www.flowdock.com/api/integration-getting-started>.

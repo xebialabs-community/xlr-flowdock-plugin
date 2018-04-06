@@ -1,6 +1,6 @@
 <!--
 
-    Copyright 2017 XEBIALABS
+    Copyright 2018 XEBIALABS
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -38,4 +38,28 @@
         <property name="link" category="input" label="Link" required="false" description="a URL to associate with this post" />
 
     </type>
+
+<type type="flowdock.Server" extends="configuration.HttpConnection" />
+
+<type type="flowdock.PostMessage" extends="xlrelease.PythonScript">
+  <property name="scriptLocation" default="caflowdock/PostMessage.py" hidden="true"/>
+  <property name="flowdockServer" category="input" kind="ci" label="Server" referenced-type="flowdock.Server" />
+
+  <!-- Message properties -->
+  <property name="flowToken" category="input" password="true"/>
+  <!-- <property name="author" category="input "/> use author={"name":"XL Release"} -->
+  <!-- <property name="event" category="input" /> use event="activity"-->
+  <property name="externalThreadId" category="input" />
+  <property name="messageTitle" category="input" />
+  <property name="messageBody" category="input" required="false" />
+
+  <!-- Thread properties -->
+  <property name="threadTitle" category="input" required="false" />
+  <property name="threadExternalUrl" category="input" required="false" />
+  <property name="threadBody" category="input" required="false" />
+  <property name="threadStatusValue" category="input" required="false" />
+  <property name="threadStatusColor" category="input" required="false" />
+  <property name="threadFields" category="input" kind="map_string_string" required="false" />
+</type>
+
 </synthetic>
