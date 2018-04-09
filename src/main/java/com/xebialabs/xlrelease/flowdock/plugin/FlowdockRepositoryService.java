@@ -9,24 +9,28 @@
  */
 package com.xebialabs.xlrelease.flowdock.plugin;
 
-import com.xebialabs.deployit.plugin.api.reflect.Type;
-import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
-import com.xebialabs.deployit.repository.RepositoryServiceHolder;
-import com.xebialabs.deployit.repository.SearchParameters;
-import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
+import com.xebialabs.xlrelease.api.v1.ConfigurationApi;
+import com.xebialabs.xlrelease.flowdock.plugin.exception.FlowdockNotConfiguredException;
 
 /**
  * Created by jdewinne on 2/5/15.
  */
 public class FlowdockRepositoryService {
 
-    private List<FlowdockConfiguration> flowdockConfigurations;
+    private List<FlowdockConfiguration> flowdockConfigurations = new ArrayList<>();
+
+    private ConfigurationApi configurationApi;
+
+    FlowdockRepositoryService(ConfigurationApi configurationApi) {
+        this.configurationApi = configurationApi;
+    }
 
     public List<FlowdockConfiguration> getFlowdockConfigurations() throws FlowdockNotConfiguredException {
-        if (flowdockConfigurations == null) {
+        if (flowdockConfigurations.isEmpty()) {
             setFlowdockConfigurations();
         }
 
@@ -34,7 +38,7 @@ public class FlowdockRepositoryService {
     }
 
     public Boolean isFlowdockEnabled() throws FlowdockNotConfiguredException {
-        if (flowdockConfigurations == null) {
+        if (flowdockConfigurations.isEmpty()) {
             setFlowdockConfigurations();
         }
 
@@ -48,13 +52,11 @@ public class FlowdockRepositoryService {
 
     private void setFlowdockConfigurations() throws FlowdockNotConfiguredException {
         // Get flowdock properties
-        SearchParameters parameters = new SearchParameters().setType(Type.valueOf("flowdock.configuration"));
-        List<ConfigurationItem> query = RepositoryServiceHolder.getRepositoryService().listEntities(parameters);
-        if (query.size() > 0) {
-            flowdockConfigurations = new ArrayList<FlowdockConfiguration>();
-            for (ConfigurationItem read : query) {
-                flowdockConfigurations.add(new FlowdockConfiguration((String) read.getProperty("apiUrl"), (String) read.getProperty("flowToken"), (Boolean) read.getProperty("enabled")));
-            }
+        final List<? extends ConfigurationItem> configurations = configurationApi.searchByTypeAndTitle("flowdock.configuration", null);
+        if (configurations.size() > 0) {
+            configurations.forEach(conf -> flowdockConfigurations.add(
+                new FlowdockConfiguration(conf.getProperty("apiUrl"), conf.getProperty("flowToken"), conf.getProperty("enabled")))
+            );
         } else {
             throw new FlowdockNotConfiguredException();
         }

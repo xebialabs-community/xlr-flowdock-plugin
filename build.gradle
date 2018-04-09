@@ -18,7 +18,8 @@ xlDocker {
   runPortMapping = '15516:5516'
 }
 
-def apiVersion = '2017.6.0'
+def apiVersion = '2018.3.0-SNAPSHOT'
+def xlrVersion = '7.6.1-SNAPSHOT' // todo: change to 8.0 when released
 
 if (!project.hasProperty('release.scope')) {
   project.ext['release.scope'] = 'patch'
@@ -39,10 +40,7 @@ repositories {
 
 dependencies {
   compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
-  compile "com.xebialabs.deployit:engine-spi:$apiVersion"
-  compile "com.xebialabs.deployit:engine-api:$apiVersion"
-  compile group: "com.xebialabs.xl-platform", name: "xl-repository-api", version: "$apiVersion", transitive: false
-  compile "nl.javadude.t2bus:t2-bus:1.2.1"
+  compile group: "com.xebialabs.xlrelease", name:"xlr-api", version: xlrVersion, transitive: false
   jython ":requests:2.11.1"
   jython(":python-flowdock:0.1") {
     artifact {

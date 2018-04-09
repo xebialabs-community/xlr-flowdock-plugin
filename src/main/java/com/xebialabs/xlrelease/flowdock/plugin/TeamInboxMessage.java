@@ -9,9 +9,9 @@
  */
 package com.xebialabs.xlrelease.flowdock.plugin;
 
-import com.xebialabs.deployit.plugin.api.udm.ConfigurationItem;
-
 import java.io.UnsupportedEncodingException;
+
+import com.xebialabs.xlrelease.domain.events.ActivityLogEvent;
 
 /**
  * Created by jdewinne on 2/5/15.
@@ -60,12 +60,12 @@ public class TeamInboxMessage extends FlowdockMessage {
         return postData.toString();
     }
 
-    public static TeamInboxMessage fromAuditableDeployitEvent(ConfigurationItem ci) {
+    public static TeamInboxMessage fromActivityLogEvent(ActivityLogEvent e) {
         TeamInboxMessage msg = new TeamInboxMessage();
         StringBuffer content = new StringBuffer();
-        content.append("XL Release event for ").append(ci.getId());
-        content.append(" with message ").append((String)ci.getProperty("message"));
-        content.append(" from user ").append((String)ci.getProperty("username"));
+        content.append("XL Release event for ").append(e.id());
+        content.append(" with message ").append(e.message());
+        content.append(" from user ").append(e.username());
 
         msg.setContent(content.toString());
         msg.setSubject("XL Release event");
