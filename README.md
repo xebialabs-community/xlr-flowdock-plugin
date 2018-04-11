@@ -29,7 +29,9 @@ The XL Release Flowdock plugin is a XL Release plugin that adds capability for s
 ## Requirements
 
 * **Requirements**
-	* **XL Release** 6.0.x+
+	* v1.0.0-v1.3.0:  **XL Release 6.0.x - 7.2.x**
+	* v1.4.0: **XL Release 8+**
+	* Event-based notifications are not supported in **XL Release 7.5.x and 7.6.x**.
 
 ## Installation
 
@@ -40,13 +42,34 @@ The XL Release Flowdock plugin is a XL Release plugin that adds capability for s
 
 ### Event based notifications
 
-1. Go to `Settings - Shared configuration - Flowdock: Configuration`
-2. Add a new configuration
-3. Provide Title (Can be anything), API url (eg: https://api.flowdock.com), Flow token (See your Flow configuration in Flowdock) and enable or disable the Flowdock configuration.
-   ![Flowdock configuration](images/Flowdock_configuration.png?raw=true "Flowdock configuration")
-4. Each time XL Release stores something into the Activity logs, this will also be send to Flowdock.   
+1. Go to `Settings - Shared configuration - Flowdock: Configuration`.
+2. Add a new configuration.
+3. Provide Title (can be anything), API url (eg: https://api.flowdock.com), Flow token (see your Flow configuration in Flowdock) and enable or disable the Flowdock configuration.
+4. Each time XL Release stores something into the Activity logs, this will also be send to Flowdock. 
+5. The SendTeamInboxMessage task can also use this configuration item.
+
+![Flowdock configuration](images/Flowdock_configuration.png?raw=true "Flowdock configuration")
+   
+
+### Flowdock server
+
+For the Post Message task, configure a Flowdock Server.  
+1. Go to `Settings - Shared configuration - Flowdock: Server`.  
+2. Add a new server.  
+3. Provide Title (can be anything) and API url (eg: https://api.flowdock.com).
+
+![Flowdock server](images/Flowdock_server.png?raw=true "Flowdock server")
 
 ## Tasks
 
-+ SendTeamInboxMessage: Send a specific message to a TeamInbox.
-+ PostMessage:  Send a specific message to a flow (inbox) using the Messages API.  A Flowdock server should be configured.  In this case the flow token must be one associated with a source.  See <https://www.flowdock.com/api/integration-getting-started>.
+### Send Team Inbox Message
+
+Send a specific message to a Team Inbox.  This task should be configured with a Flowdock configuration and a flow token that is not associated with a source.
+
+![Flowdock send team inbox message](images/Flowdock_send_team_inbox_message.png?raw=true "Flowdock send team inbox message")
+
+### Post Message  
+
+Send a specific message to a flow (inbox) using the Messages API.  This task should be configured with a Flowdock server and a flow token that is associated with a source.  See <https://www.flowdock.com/api/integration-getting-started>.
+
+![Flowdock post message](images/Flowdock_post_message.png?raw=true "Flowdock post message")
