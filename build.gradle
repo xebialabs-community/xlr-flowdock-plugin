@@ -19,7 +19,7 @@ xlDocker {
 }
 
 def apiVersion = '2018.1.0'
-def xlrVersion = '7.6.1' // todo: change to 8.0 when released
+def xlrVersion = '8.0.0'
 
 if (!project.hasProperty('release.scope')) {
   project.ext['release.scope'] = 'patch'
@@ -39,13 +39,8 @@ repositories {
 }
 
 dependencies {
-//  compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
-//  compile group: "com.xebialabs.xlrelease", name:"xlr-api", version: xlrVersion, transitive: false
-  compile files ("/Users/droberts/products/xl-release-8.0.0-rc.4-server/lib/mbassador-1.3.1.jar",
-                 "/Users/droberts/products/xl-release-8.0.0-rc.4-server/lib/scala-library-2.12.3.jar",
-                 "/Users/droberts/products/xl-release-8.0.0-rc.4-server/lib/udm-plugin-api-2018.3.0-rc.11.jar",
-                 "/Users/droberts/products/xl-release-8.0.0-rc.4-server/lib/xlr-api-8.0.0-rc.4.jar",
-                 "/Users/droberts/products/xl-release-8.0.0-rc.4-server/lib/slf4j-api-1.7.25.jar")
+  compile group: "com.xebialabs.xlrelease", name: "xlr-api", version: xlrVersion, transitive: false
+  compile "com.xebialabs.deployit:udm-plugin-api:$apiVersion"
   jython ":requests:2.11.1"
   jython(":python-flowdock:0.1") {
     artifact {
